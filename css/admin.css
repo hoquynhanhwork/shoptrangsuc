@@ -1,0 +1,155 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #e4d4d6;
+    overflow-x: hidden;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #212737;
+    color: #e4d4d6;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    overflow-y: auto;
+
+    /* tối giản */
+    box-shadow: none;
+    border-right: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ===== LOGO ===== */
+.sidebar .logo {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.sidebar .logo img {
+    width: 100px;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* ===== MENU ===== */
+.sidebar ul {
+    list-style: none;
+    padding: 0 12px;
+}
+
+.sidebar ul li {
+    margin: 3px 0;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 18px;
+    color: #e4d4d6;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+
+    /* ❌ bỏ animation */
+    transition: none;
+}
+
+.sidebar ul li a i {
+    width: 22px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* HOVER (nhẹ, không chuyển động) */
+.sidebar ul li a:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+/* ACTIVE */
+.sidebar ul li.active a {
+    background: #e4d4d6;
+    color: #212737;
+    font-weight: 600;
+}
+
+.sidebar ul li.active a i {
+    color: #212737;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    margin-left: 280px;
+    padding: 24px 32px;
+    min-height: 100vh;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 260px;
+
+        /* ❌ bỏ slide */
+        transform: none;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1100;
+        background: #e4d4d6;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 10px;
+        color: #212737;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+}
+
+@media (min-width: 993px) {
+    .menu-toggle {
+        display: none;
+    }
+}
+
+/* ===== SCROLLBAR ===== */
+.sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #e4d4d6;
+    border-radius: 10px;
+}
+
+/* ===== PAGE ===== */
+.page-header {
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #212737;
+}
+
+.page-header p {
+    color: #475569;
+    margin-top: 5px;
+}

@@ -9,6 +9,7 @@
                     Cửa hàng trang sức Aura chuyên cung cấp trang sức cao cấp, thiết kế tinh tế, phù hợp cho mọi phong cách.
                 </p>
             </div>
+
             <div class="col-md-2">
                 <h5>Liên kết</h5>
                 <ul class="list-unstyled">
@@ -18,21 +19,23 @@
                     <li><a href="dich-vu.php">Dịch vụ</a></li>
                 </ul>
             </div>
+
             <div class="col-md-3">
                 <h5>Hỗ trợ</h5>
                 <ul class="list-unstyled">
-                    <li><a href="chinh-sach-doi-tra.php">Chính sách đổi trả</a></li>
-                    <li><a href="chinh-sach-van-chuyen.php">Chính sách vận chuyển</a></li>
-                    <li><a href="chinh-sach-thanh-toan.php">Chính sách thanh toán</a></li>
-                    <li><a href="huong-dan-bao-duong.php">Hướng dẫn bảo dưỡng</a></li>
-                    <li><a href="huong-dan-do-kich-thuoc.php">Hướng dẫn đo kích thước</a></li>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Thanh toán</a></li>
                 </ul>
             </div>
-            <div class="col-md-2">
+
+            <div class="col-md-3">
                 <h5>Liên hệ</h5>
                 <p><i class="bi bi-geo-alt"></i> TP.HCM</p>
                 <p><i class="bi bi-telephone"></i> 0123 456 789</p>
-                <p><i class="bi bi-envelope"></i>nhom8.aurajewelry@gmail.com</p>
+                <p><i class="bi bi-envelope"></i> contact@gmail.com</p>
+
                 <div class="social-icons mt-2">
                     <a href="#"><i class="bi bi-facebook"></i></a>
                     <a href="#"><i class="bi bi-instagram"></i></a>
@@ -45,3 +48,8 @@
         © 2026 Jewelry Store. All rights reserved.
     </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

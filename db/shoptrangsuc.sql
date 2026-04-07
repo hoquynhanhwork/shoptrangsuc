@@ -215,6 +215,23 @@ CREATE TABLE `trangthaidonhang` (
   `TenTrangThai` varchar(50) DEFAULT 'Đang xử lý'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lienhe`
+--
+
+CREATE TABLE `lienhe` (
+  `MaLienHe` int(11) NOT NULL,
+  `HoTen` varchar(100) NOT NULL,
+  `SoDienThoai` varchar(20) DEFAULT NULL,
+  `Email` varchar(100) NOT NULL,
+  `ChuDe` varchar(255) NOT NULL,
+  `NoiDung` text NOT NULL,
+  `TrangThai` enum('new','read','replied') DEFAULT 'new',
+  `NgayTao` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -302,6 +319,14 @@ ALTER TABLE `trangthaidonhang`
   ADD PRIMARY KEY (`MaTrangThai`);
 
 --
+-- Indexes for table `lienhe`
+--
+ALTER TABLE `lienhe`
+  ADD PRIMARY KEY (`MaLienHe`),
+  ADD KEY `idx_lienhe_email` (`Email`),
+  ADD KEY `idx_lienhe_trangthai` (`TrangThai`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -364,6 +389,12 @@ ALTER TABLE `tintuc`
 --
 ALTER TABLE `trangthaidonhang`
   MODIFY `MaTrangThai` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lienhe`
+--
+ALTER TABLE `lienhe`
+  MODIFY `MaLienHe` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

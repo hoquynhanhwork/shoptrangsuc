@@ -1,8 +1,11 @@
 <?php
 session_start();
-// Nếu đã đăng nhập thì chuyển về trang chủ
 if (isset($_SESSION['nguoidung'])) {
-    header('Location: trang-chu.php');
+    if ($_SESSION['nguoidung']['VaiTro'] === 'admin') {
+        header('Location: ../admin/tong-quan.php');
+    } else {
+        header('Location: trang-chu.php');
+    }
     exit;
 }
 ?>
@@ -109,6 +112,5 @@ if (isset($_SESSION['nguoidung'])) {
 </body>
 </html>
 <?php
-// Xóa dữ liệu old_login sau khi hiển thị (tránh hiển thị lại khi refresh)
 unset($_SESSION['old_login']);
 ?>

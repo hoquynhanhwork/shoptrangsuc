@@ -2,7 +2,6 @@
 session_start();
 require_once '../config.php';
 
-// Khai báo sử dụng PHPMailer ở phạm vi toàn cục
 require_once '../PHPMailer/src/PHPMailer.php';
 require_once '../PHPMailer/src/SMTP.php';
 require_once '../PHPMailer/src/Exception.php';
@@ -35,13 +34,13 @@ if ($action === 'dangky') {
     if ($matkhau !== $xacnhan) $errors[] = 'Xác nhận mật khẩu không khớp';
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("SELECT idUser FROM nguoidung WHERE TenDangNhap = ? OR Email = ?");
-        $stmt->execute([$tendangnhap, $email]);
+        $stmt = $conn->prepare("SELECT idUser FROM nguoidung WHERE TenDangNhap = ? OR Email = ? OR SoDienThoai = ?");
+        $stmt->execute([$tendangnhap, $email, $sodienthoai]);
         if ($stmt->fetch()) {
-            $errors[] = 'Tên đăng nhập hoặc email đã tồn tại';
+            $errors[] = 'Tên đăng nhập, email hoặc số điện thoại đã tồn tại';
         } else {
             $hashed = password_hash($matkhau, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO nguoidung (HoTen, TenDangNhap, MatKhau, Email, SoDienThoai, DiaChi, VaiTro, trang_thai, NgayTao) 
+            $sql = "INSERT INTO nguoidung (HoTen, TenDangNhap, MatKhau, Email, SoDienThoai, DiaChi, VaiTro, TrangThai, NgayTao) 
                     VALUES (?, ?, ?, ?, ?, ?, 'khachhang', 1, NOW())";
             $stmt = $conn->prepare($sql);
             if ($stmt->execute([$hoten, $tendangnhap, $hashed, $email, $sodienthoai, $diachi])) {
@@ -70,12 +69,12 @@ elseif ($action === 'dangnhap') {
         exit;
     }
 
-    $stmt = $conn->prepare("SELECT * FROM nguoidung WHERE Email = ? OR SoDienThoai = ? OR TenDangNhap = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT * FROM nguoidung WHERE (Email = ? OR SoDienThoai = ? OR TenDangNhap = ?) AND DelAt = 0 LIMIT 1");
     $stmt->execute([$login_input, $login_input, $login_input]);
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['MatKhau'])) {
-        if ($user['trang_thai'] == 1) {
+        if ($user['TrangThai'] == 1) {
             $_SESSION['nguoidung'] = [
                 'idUser'      => $user['idUser'],
                 'HoTen'       => $user['HoTen'],
@@ -184,6 +183,7 @@ elseif ($action === 'doi-mat-khau') {
     header('Location: doi-mat-khau.php');
     exit;
 }
+
 // ==================== CẬP NHẬT THÔNG TIN ====================
 elseif ($action === 'sua-thong-tin') {
     if (!isset($_SESSION['nguoidung'])) {
@@ -273,7 +273,6 @@ elseif ($action === 'sua-thong-tin') {
     header('Location: sua-tai-khoan.php');
     exit;
 }
-
 // ==================== QUÊN MẬT KHẨU ====================
 elseif ($action === 'quen-mat-khau') {
     $email = trim($_POST['email'] ?? '');
@@ -282,7 +281,7 @@ elseif ($action === 'quen-mat-khau') {
         header('Location: quen-mat-khau.php');
         exit;
     }
-    $stmt = $conn->prepare("SELECT idUser, HoTen FROM nguoidung WHERE Email = ?");
+    $stmt = $conn->prepare("SELECT idUser, HoTen FROM nguoidung WHERE Email = ? AND DelAt = 0");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$user) {
@@ -291,16 +290,15 @@ elseif ($action === 'quen-mat-khau') {
         exit;
     }
 
-    // Tạo mã 6 số, đảm bảo không trùng token đang còn hiệu lực
     do {
         $token = (string) random_int(100000, 999999);
-        $check = $conn->prepare("SELECT idUser FROM nguoidung WHERE token_quen_mk = ? AND thoi_gian_quen_mk > NOW()");
+        $check = $conn->prepare("SELECT idUser FROM tokens WHERE token = ? AND HetHan > NOW()");
         $check->execute([$token]);
     } while ($check->fetch());
 
-    $expires = date('Y-m-d H:i:s', strtotime('+5 minutes'));
-    $update = $conn->prepare("UPDATE nguoidung SET token_quen_mk = ?, thoi_gian_quen_mk = ? WHERE idUser = ?");
-    $update->execute([$token, $expires, $user['idUser']]);
+    $insertToken = $conn->prepare("INSERT INTO tokens (idUser, token, HetHan) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 5 MINUTE))");
+    $insertToken->execute([$user['idUser'], $token]);
+
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
@@ -335,7 +333,8 @@ elseif ($action === 'quen-mat-khau') {
         exit;
     }
 }
-// ==================== ĐẶT LẠI MẬT KHẨU (RESET PASSWORD) ====================
+
+// ==================== ĐẶT LẠI MẬT KHẨU ====================
 elseif ($action === 'reset-password') {
     $token = $_POST['token'] ?? '';
     $password = $_POST['matkhau'] ?? '';
@@ -351,7 +350,8 @@ elseif ($action === 'reset-password') {
         header("Location: dat-lai-mat-khau.php");
         exit;
     }
-    $stmt = $conn->prepare("SELECT idUser FROM nguoidung WHERE token_quen_mk = ? AND thoi_gian_quen_mk > NOW()");
+
+    $stmt = $conn->prepare("SELECT idUser FROM tokens WHERE token = ? AND HetHan > NOW()");
     $stmt->execute([$token]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$user) {
@@ -361,8 +361,10 @@ elseif ($action === 'reset-password') {
     }
 
     $hashed = password_hash($password, PASSWORD_DEFAULT);
-    $update = $conn->prepare("UPDATE nguoidung SET MatKhau = ?, token_quen_mk = NULL, thoi_gian_quen_mk = NULL WHERE idUser = ?");
+    $update = $conn->prepare("UPDATE nguoidung SET MatKhau = ? WHERE idUser = ?");
     if ($update->execute([$hashed, $user['idUser']])) {
+        $delToken = $conn->prepare("DELETE FROM tokens WHERE token = ?");
+        $delToken->execute([$token]);
         $_SESSION['success'] = 'Mật khẩu đã được đặt lại thành công. Vui lòng đăng nhập.';
         header('Location: dang-nhap.php');
         exit;

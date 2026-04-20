@@ -39,12 +39,22 @@ include "../layout/header_public.php";
     <div class="policy-two-columns">
         <div class="highlight" style="margin-bottom: 0;">
             <div class="card-icon">
-                <i class="bi bi-gem"></i> <h4>Chính sách theo chất liệu</h4>
+                <i class="bi bi-gem"></i> 
+                <h4>Chính sách sản phẩm bạc</h4>
             </div>
+
             <ul class="material-policies">
-                <li><strong>✨ Mạ vàng</strong> – Có thể phai màu theo thời gian. <strong>Không đổi trả</strong> vì bay màu. Hỗ trợ mạ lại ưu đãi.</li>
-                <li><strong>⚙️ Titan</strong> – Chất liệu bền, không gỉ. Đổi nếu lỗi sản xuất. Không áp dụng trầy xước do sử dụng.</li>
-                <li><strong>💎 Bạc</strong> – Xỉn màu tự nhiên. <strong>Không đổi trả</strong>. Hỗ trợ làm sạch, đánh bóng miễn phí trọn đời.</li>
+                <li>
+                    <strong>💎 Bạc (Silver)</strong> là chất liệu có thể <strong>xỉn màu tự nhiên theo thời gian</strong> do tiếp xúc với mồ hôi, không khí hoặc hóa chất. Đây là đặc tính bình thường, không phải lỗi sản phẩm.
+                </li>
+
+                <li>
+                    Sản phẩm bạc <strong>không áp dụng đổi trả vì xỉn màu</strong>. Tuy nhiên, shop hỗ trợ <strong>làm sạch và đánh bóng miễn phí trọn đời</strong> để giữ sản phẩm luôn sáng đẹp.
+                </li>
+
+                <li>
+                    Khuyến nghị khách hàng <strong>tránh tiếp xúc với nước hoa, hóa chất</strong> và bảo quản nơi khô ráo. Nếu có <strong>lỗi kỹ thuật</strong>, shop sẽ hỗ trợ xử lý theo chính sách bảo hành.
+                </li>
             </ul>
         </div>
 

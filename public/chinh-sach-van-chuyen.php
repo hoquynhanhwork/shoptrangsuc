@@ -8,7 +8,6 @@ include "../layout/header_public.php";
         <p>Giao hàng nhanh chóng – An toàn – Minh bạch trên toàn quốc</p>
     </div>
 
-    <!-- 3 cột chính: phạm vi, thời gian, chi phí -->
     <div class="policy-row">
         <div class="policy-col">
             <div class="card-icon"><i class="bi bi-truck"></i> <h4>Phạm vi giao hàng</h4></div>
@@ -29,15 +28,12 @@ include "../layout/header_public.php";
         <div class="policy-col">
             <div class="card-icon"><i class="bi bi-cash-stack"></i> <h4>Chi phí vận chuyển</h4></div>
             <ul>
-                <li><strong>Miễn phí</strong> cho đơn hàng từ <strong>500.000đ</strong></li>
                 <li>Nội thành: <strong>20.000đ – 30.000đ</strong></li>
                 <li>Ngoại tỉnh: <strong>30.000đ – 50.000đ</strong></li>
                 <li>Áp dụng theo bảng giá của đơn vị vận chuyển</li>
             </ul>
         </div>
     </div>
-
-    <!-- Quy trình giao hàng (dạng highlight) -->
     <div class="highlight">
         <div class="card-icon">
             <i class="bi bi-arrow-repeat"></i>
@@ -74,8 +70,6 @@ include "../layout/header_public.php";
             </div>
         </div>
     </div>
-
-    <!-- 3 cột bổ sung: kiểm tra, không thành công, cam kết -->
     <div class="policy-grid">
         <div class="policy-card">
             <div class="card-icon"><i class="bi bi-box-seam"></i><h4>Kiểm tra khi nhận hàng</h4></div>
@@ -107,5 +101,4 @@ include "../layout/header_public.php";
         <i class="bi bi-info-circle"></i> Mọi thắc mắc về vận chuyển vui lòng liên hệ Hotline: <strong>1900 1234</strong> hoặc inbox Fanpage để được hỗ trợ nhanh nhất.
     </div>
 </div>
-
 <?php include "../layout/footer_public.php"; ?>

@@ -17,9 +17,11 @@ $bodyClass = $bodyClass ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aura Jewelry Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/public.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="<?= htmlspecialchars($bodyClass) ?>">
 
@@ -68,38 +70,29 @@ $bodyClass = $bodyClass ?? '';
                 <li class="nav-item">
                     <a class="nav-link" href="gioi-thieu.php">GIỚI THIỆU</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="bo-suu-tap.php">BỘ SƯU TẬP</a>
-                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle d-flex align-items-center" 
-                    href="san-pham.php" 
-                    role="button" 
-                    data-bs-toggle="dropdown" 
-                    aria-expanded="false">
+                     <a class="nav-link d-flex align-items-center" href="san-pham.php">
                         SẢN PHẨM <i class="bi bi-chevron-down ms-1"></i>
                     </a>
-                    <ul class="dropdown-menu p-3" style="min-width: 300px;">
-                        <div class="row">
-                            <div class="col-6">
-                                <h6>Phân loại</h6>
-                                <a class="dropdown-item" href="danh-muc.php?loai=vong-tay">Vòng tay</a>
-                                <a class="dropdown-item" href="danh-muc.php?loai=day-chuyen">Dây chuyền</a>
-                                <a class="dropdown-item" href="danh-muc.php?loai=hoa-tai">Hoa tai</a>
-                                <a class="dropdown-item" href="danh-muc.php?loai=nhan">Nhẫn</a>
-                                <a class="dropdown-item" href="danh-muc.php?loai=mat-day">Mặt dây chuyền</a>
-                            </div>
-                            <div class="col-4">
-                                <h6>Chất liệu</h6>
-                                <a class="dropdown-item" href="danh-muc.php?chatlieu=bac">Bạc</a>
-                                <a class="dropdown-item" href="danh-muc.php?chatlieu=ma-vang">Mạ vàng</a>
-                                <a class="dropdown-item" href="danh-muc.php?chatlieu=titan">Titan</a>
-                            </div>
-                        </div>
+                    <ul class="dropdown-menu p-2">
+                        <li><h6 class="dropdown-header">Phân loại</h6></li>
+                        <li><a class="dropdown-item" href="san-pham.php?madanhmuc=1">Nhẫn</a></li>
+                        <li><a class="dropdown-item" href="san-pham.php?madanhmuc=2">Vòng tay</a></li>
+                        <li><a class="dropdown-item" href="san-pham.php?madanhmuc=3">Dây chuyền</a></li>
+                        <li><a class="dropdown-item" href="san-pham.php?madanhmuc=4">Mặt dây chuyền</a></li>
+                        <li><a class="dropdown-item" href="san-pham.php?madanhmuc=5">Hoa tai</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="dich-vu.php">DỊCH VỤ</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link  d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                        HỖ TRỢ <i class="bi bi-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="supportDropdown">
+                        <li><a class="dropdown-item" href="chinh-sach-doi-tra.php">Chính sách đổi trả</a></li>
+                        <li><a class="dropdown-item" href="chinh-sach-van-chuyen.php">Chính sách vận chuyển</a></li>
+                        <li><a class="dropdown-item" href="huong-dan-bao-duong.php">Hướng dẫn bảo dưỡng</a></li>
+                        <li><a class="dropdown-item" href="huong-dan-do-kich-thuoc.php">Hướng dẫn đo kích thước</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="lien-he.php">LIÊN HỆ</a>

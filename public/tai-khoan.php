@@ -25,12 +25,27 @@ if ($info) {
     $user['DiaChi']      = '';
 }
 
+$limit = 3;
+$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$offset = ($page - 1) * $limit;
+
+$countStmt = $conn->prepare("SELECT COUNT(*) as total FROM donhang WHERE idUser = ?");
+$countStmt->execute([$idUser]);
+$totalOrders = $countStmt->fetch(PDO::FETCH_ASSOC)['total'];
+$totalPages = ceil($totalOrders / $limit);
+
 $stmt = $conn->prepare("
-    SELECT * FROM donhang 
-    WHERE idUser = ? 
-    ORDER BY NgayDatHang DESC
+    SELECT dh.*, tt.TenTrangThai 
+    FROM donhang dh
+    LEFT JOIN trangthaidonhang tt ON dh.MaTrangThai = tt.MaTrangThai
+    WHERE dh.idUser = ? 
+    ORDER BY dh.NgayDatHang DESC
+    LIMIT ? OFFSET ?
 ");
-$stmt->execute([$idUser]);
+$stmt->bindParam(1, $idUser, PDO::PARAM_INT);
+$stmt->bindParam(2, $limit, PDO::PARAM_INT);
+$stmt->bindParam(3, $offset, PDO::PARAM_INT);
+$stmt->execute();
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $bodyClass = 'account-page';
@@ -82,24 +97,55 @@ include "../layout/header_public.php";
                         <?php foreach ($orders as $order): ?>
                             <div class="order-item">
                                 <div class="order-header">
-                                    <span class="order-id">Mã đơn: #<?= $order['MaDonHang'] ?></span>
+                                    <span class="order-id">Mã đơn: #<?= htmlspecialchars($order['MaDonHang']) ?></span>
                                     <span class="order-date"><?= date('d/m/Y H:i', strtotime($order['NgayDatHang'])) ?></span>
                                 </div>
                                 <div class="order-details">
                                     <div class="order-status">
-                                        <span class="status-badge status-<?= strtolower($order['payment_status']) ?>">
-                                            <?= $order['payment_status'] == 'pending' ? 'Chờ thanh toán' : ($order['payment_status'] == 'paid' ? 'Đã thanh toán' : 'Thất bại') ?>
+                                        <span class="status-badge status-<?= strtolower(str_replace(' ', '-', $order['TenTrangThai'] ?? 'Đang xử lý')) ?>">
+                                            <?= htmlspecialchars($order['TenTrangThai'] ?? 'Đang xử lý') ?>
                                         </span>
                                         <span class="order-total"><?= number_format($order['TongTien']) ?>đ</span>
                                     </div>
                                     <div class="order-method">
                                         <i class="bi bi-credit-card"></i> 
-                                        <?= $order['payment_method'] == 'cod' ? 'Thanh toán khi nhận hàng' : ($order['payment_method'] == 'momo' ? 'Ví MoMo' : 'Chuyển khoản ngân hàng') ?>
+                                        <?php
+                                        switch ($order['PhuongThucThanhToan']) {
+                                            case 'cod': echo 'Thanh toán khi nhận hàng (COD)'; break;
+                                            case 'momo': echo 'Ví MoMo'; break;
+                                            case 'bank': echo 'Chuyển khoản ngân hàng'; break;
+                                            default: echo htmlspecialchars($order['PhuongThucThanhToan']);
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="order-action mt-2">
+                                        <a href="chi-tiet-don-hang.php?id=<?= $order['MaDonHang'] ?>" class="btn btn-sm btn-outline-secondary">
+                                            <i class="bi bi-eye"></i> Xem chi tiết
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
+
+                    <?php if ($totalPages > 1): ?>
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?page=<?= $page - 1 ?>">«</a>
+                            </li>
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a>
+                                </li>
+                            <?php endfor; ?>
+                            <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
+                                <a class="page-link" href="?page=<?= $page + 1 ?>">»</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <?php endif; ?>
+
                 <?php else: ?>
                     <div class="empty-orders">
                         <i class="bi bi-box-seam"></i>
@@ -110,5 +156,4 @@ include "../layout/header_public.php";
         </div>
     </div>
 </div>
-
 <?php include "../layout/footer_public.php"; ?>

@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Nếu đã đăng nhập thì chuyển về trang chủ
 if (isset($_SESSION['nguoidung'])) {
     header('Location: trang-chu.php');
     exit;

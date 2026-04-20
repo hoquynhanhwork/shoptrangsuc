@@ -1,18 +1,15 @@
 <?php
 session_start();
 require_once '../config.php';
-
-// Nếu đã đăng nhập thì chuyển về trang chủ
 if (isset($_SESSION['nguoidung'])) {
     header('Location: trang-chu.php');
     exit;
 }
 
-$step = 'enter_code'; // mặc định là bước nhập mã
+$step = 'enter_code';
 $user_info = null;
 $token_input = '';
 
-// Xử lý khi submit form nhập mã
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token_code'])) {
     $token_input = trim($_POST['token_code']);
     if (empty($token_input)) {
@@ -21,13 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token_code'])) {
         exit;
     }
 
-    // Kiểm tra token trong database
-    $stmt = $conn->prepare("SELECT idUser, HoTen FROM nguoidung WHERE token_quen_mk = ? AND thoi_gian_quen_mk > NOW()");
+    $stmt = $conn->prepare("
+        SELECT t.idUser, u.HoTen 
+        FROM tokens t
+        JOIN nguoidung u ON t.idUser = u.idUser
+        WHERE t.token = ? AND t.HetHan > NOW()
+    ");
     $stmt->execute([$token_input]);
     $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user_info) {
-        // Token hợp lệ → chuyển sang bước đặt mật khẩu
         $step = 'reset_password';
     } else {
         $_SESSION['error'] = 'Mã xác nhận không hợp lệ hoặc đã hết hạn.';
@@ -35,8 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token_code'])) {
         exit;
     }
 }
-
-// Xử lý khi submit form đặt lại mật khẩu (gửi sang xu-ly-tai-khoan.php)
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -77,7 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token_code'])) {
         <?php endif; ?>
 
         <?php if ($step === 'enter_code'): ?>
-            <!-- Bước 1: Nhập mã xác nhận -->
             <h4 class="text-center mb-3 fw-semibold">Nhập mã xác nhận</h4>
             <p class="text-center text-muted small">Mã đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư (kể cả spam).</p>
 
@@ -93,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token_code'])) {
             </form>
 
         <?php else: ?>
-            <!-- Bước 2: Đặt lại mật khẩu (token hợp lệ) -->
             <h4 class="text-center mb-3 fw-semibold">Đặt lại mật khẩu</h4>
             <p class="text-center text-muted small">Xin chào <strong><?= htmlspecialchars($user_info['HoTen']) ?></strong>, vui lòng nhập mật khẩu mới.</p>
 
@@ -150,12 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['token_code'])) {
                 const icon = this.querySelector('i');
                 if (input.type === 'password') {
                     input.type = 'text';
-                    icon.classList.remove('bi-eye-slash');
-                    icon.classList.add('bi-eye');
                 } else {
                     input.type = 'password';
-                    icon.classList.remove('bi-eye');
-                    icon.classList.add('bi-eye-slash');
                 }
             });
         });

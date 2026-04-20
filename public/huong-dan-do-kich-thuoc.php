@@ -4,14 +4,11 @@ include "../layout/header_public.php";
 ?>
 
 <div class="size-container">
-
-    <!-- Header -->
     <div class="size-header">
         <h1>HƯỚNG DẪN ĐO KÍCH THƯỚC</h1>
         <p>Chọn size vòng tay, dây chuyền, nhẫn vừa vặn và thoải mái nhất</p>
     </div>
 
-    <!-- SECTION 1: Vòng tay -->
     <div class="size-section">
         <div class="size-images">
             <img src="../img/size-bracelet1.jpg" class="img-big" alt="Đo size vòng tay">
@@ -29,7 +26,6 @@ include "../layout/header_public.php";
             </ul>
             <p><strong>Mẹo chọn size:</strong> Nếu thích vừa vặn → chọn size bằng số đo; thích rộng rãi → chọn lớn hơn 0.5–1cm; phân vân → chọn size lớn hơn.</p>
 
-            <!-- Bảng size cho các dòng sản phẩm -->
             <h4>📌 Bảng kích thước tham khảo</h4>
             <div class="size-table-wrapper">
                 <table class="size-table">
@@ -42,23 +38,23 @@ include "../layout/header_public.php";
                     </thead>
                     <tbody>
                         <tr>
-                            <td>13 – 14</td>
-                            <td>15 – 16 cm</td>
+                            <td>13 – 14 cm</td>
+                            <td>12 - 14</td>
                             <td>Size nhỏ (cổ tay mảnh)</td>
                         </tr>
                         <tr>
-                            <td>15 – 16</td>
-                            <td>17 – 18 cm</td>
+                            <td>15 – 16 cm</td>
+                            <td>15 - 17</td>
                             <td>Size trung bình</td>
                         </tr>
                         <tr>
-                            <td>17 – 18</td>
-                            <td>19 – 20 cm</td>
+                            <td>17 – 18 cm</td>
+                            <td>18 - 20 </td>
                             <td>Size lớn</td>
                         </tr>
                         <tr>
                             <td>19 – 20</td>
-                            <td>21 – 22 cm</td>
+                            <td> > 20 </td>
                             <td>Cổ tay to</td>
                         </tr>
                     </tbody>
@@ -74,7 +70,6 @@ include "../layout/header_public.php";
         </div>
     </div>
 
-    <!-- SECTION 2: Dây chuyền (đảo chiều) -->
     <div class="size-section reverse">
         <div class="size-images">
         <div class="img-small-group" style="display: flex; flex-direction: column; gap: 15px; margin-top: 15px;">
@@ -96,16 +91,15 @@ include "../layout/header_public.php";
                 <table class="size-table">
                     <thead><tr><th>Vòng cổ (cm)</th><th>Size dây chuyền đề xuất</th></tr></thead>
                     <tbody>
-                        <tr><td>30–33</td><td>40–45 cm</td></tr>
-                        <tr><td>34–36</td><td>45–50 cm</td></tr>
-                        <tr><td>37–40</td><td>50–55 cm</td></tr>
+                        <tr><td>30–33 cm</td><td>15 - 17</td></tr>
+                        <tr><td>34–36 cm</td><td>18 - 20 </td></tr>
+                        <tr><td>37–40 cm </td><td> > 20</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- SECTION 3: Nhẫn -->
     <div class="size-section">
         <div class="size-images">
             <img src="../img/size-ring1.jpg" class="img-big" alt="Đo size nhẫn">
@@ -126,11 +120,11 @@ include "../layout/header_public.php";
                 <table class="size-table">
                     <thead><tr><th>Đường kính (mm)</th><th>Size nhẫn (VN)</th><th>Chu vi (mm)</th></tr></thead>
                     <tbody>
-                        <tr><td>13.5</td><td>48</td><td>~42.4</td></tr>
-                        <tr><td>15.9</td><td>50</td><td>~49.9</td></tr>
-                        <tr><td>16.6</td><td>52</td><td>~52.1</td></tr>
-                        <tr><td>17.2</td><td>54</td><td>~54.0</td></tr>
-                        <tr><td>17.8</td><td>56</td><td>~55.9</td></tr>
+                        <tr><td>13.5</td><td>5</td><td>~42.4</td></tr>
+                        <tr><td>15.9</td><td>6 - 7</td><td>~49.9</td></tr>
+                        <tr><td>16.6</td><td>8 - 9</td><td>~52.1</td></tr>
+                        <tr><td>17.2</td><td>10 - 11</td><td>~54.0</td></tr>
+                        <tr><td>17.8</td><td> > 12 </td><td>~55.9</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -141,5 +135,4 @@ include "../layout/header_public.php";
         <i class="bi bi-question-circle"></i> Mọi thắc mắc về kích thước, vui lòng liên hệ Hotline: <strong>1900 1234</strong> hoặc inbox Fanpage để được tư vấn miễn phí.
     </div>
 </div>
-
 <?php include "../layout/footer_public.php"; ?>

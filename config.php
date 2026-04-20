@@ -1,5 +1,4 @@
 <?php
-// config.php - đặt trong thư mục public (cùng với xu-ly-tai-khoan.php)
 
 $host = 'localhost';
 $dbname = 'shoptrangsuc';
